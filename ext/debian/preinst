@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# This is pleasantly idempotent.
+adduser --system --home /var/lib/razor --shell /bin/bash \
+    --group --gecos 'Razor service account' razor

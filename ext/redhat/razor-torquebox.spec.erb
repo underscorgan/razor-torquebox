@@ -59,12 +59,25 @@ done
 mkdir -p %{buildroot}/etc/razor
 cp razor-torquebox.sh %{buildroot}/etc/razor
 
+# Move the home directory out into a more FHS-compliant location
+mkdir -p %{buildroot}/var/lib/razor
+mv %{buildroot}/opt/razor-torquebox/jboss/standalone %{buildroot}/var/lib/razor-torquebox
+ln -s /var/lib/razor-torquebox %{buildroot}/opt/razor-torquebox/jboss/standalone
+
 %clean
 rm -rf %{buildroot}
+
+%pre -p /bin/bash
+getent group razor >/dev/null || groupadd -r razor
+getent passwd razor >/dev/null || \
+    useradd -r -g razor -d /var/lib/razor -s /bin/bash \
+    -c "Razor service account" razor
+exit 0
 
 %files
 %defattr(-,root,root,-)
 /opt/razor-torquebox
+%attr(-,razor,razor) /var/lib/razor-torquebox
 %config /etc/razor/razor-torquebox.sh
 
 %changelog
