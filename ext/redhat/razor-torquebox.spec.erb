@@ -1,0 +1,72 @@
+%global _name          razor-torquebox
+%global realversion    <%= @version %>
+%global rpmversion     <%= @rpmversion %>
+
+# For better or worse, there are a bunch of different arch binaries in this.
+# They get loaded and managed by Java and the app stack without our
+# intervention, so we should allow them without termination.
+%define _binaries_in_noarch_packages_terminate_build   0
+
+Summary:        <%= @summary %>
+Name:           %{_name}
+Version:        %{rpmversion}
+Release:        <%= @rpmrelease -%>%{?dist}
+Vendor:         Puppet Labs
+License:        Various: GNU LGPL and MIT
+Group:          System Environment/Base
+URL:            http://www.puppetlabs.com/puppet/related-projects/%{name}
+# Note this     URL will only be valid at official tags from Puppet Labs
+Source0:        http://puppetlabs.com/downloads/%{name}/%{name}-%{realversion}.tar.gz
+BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+AutoProv:       0
+
+# @todo danielp 2014-01-10: for some reason this results in a dependency on
+# `config(razor-torquebox) = %{version}`, which I can't figure out.  Whatever.
+AutoReqProv:    0
+Requires:       /bin/sh
+Requires:       /usr/bin/env
+# This one is not auto-detected either way.
+Requires:       java
+
+%description
+<%= @description %>
+
+%prep
+%setup -q -n %{name}-%{realversion}
+
+%build
+: nothing to be done
+
+%install
+rm -rf %{buildroot}
+
+# Install the binary distribution.
+mkdir -p %{buildroot}/opt
+unzip -q -d %{buildroot}/opt torquebox-dist-3.0.1-bin.zip
+mv %{buildroot}/opt/torquebox-3.0.1 %{buildroot}/opt/razor-torquebox
+
+# This is nasty, but otherwise we get a dependency on the interpreter that we
+# really, really don't want to have.
+for bin in jruby_visualizer jrubyfx-jarify jrubyfx-generator jrubyfx-compile; do
+    sed -i -e 's@^#!/.*/jruby@#!/usr/bin/env jruby@' \
+        %{buildroot}/opt/razor-torquebox/jruby/bin/${bin}
+done
+
+# Install a nicer, more generic way for consumers of this to interact with it,
+# so they don't have to hard-code our paths -- and we can fix them later by
+# bumping this package without touching everything that depends on it.
+mkdir -p %{buildroot}/etc/razor
+cp razor-torquebox.sh %{buildroot}/etc/razor
+
+%clean
+rm -rf %{buildroot}
+
+%files
+%defattr(-,root,root,-)
+/opt/razor-torquebox
+%config /etc/razor/razor-torquebox.sh
+
+%changelog
+* <%= Time.now.strftime("%a %b %d %Y") %> Puppet Labs Release <info@puppetlabs.com> -  <%= @rpmversion %>-<%= @rpmrelease %>
+- Build for <%= @version %>

@@ -1,0 +1,22 @@
+---
+project:  'razor-torquebox'
+author:   'Red Hat, Inc'
+email:    'torquebox-dev@torquebox.org'
+homepage: 'http://torquebox.org'
+summary:  'TorqueBox is a Ruby/JBoss application application platform'
+description: |
+  TorqueBox is a new kind of Ruby application platform that supports popular
+  technologies such as Ruby on Rails and Sinatra, while extending the
+  footprint of Ruby applications to include built-in support for services such
+  as messaging, scheduling, caching, and daemons.
+  
+  TorqueBox provides an all-in-one environment, built upon the latest JBoss AS
+  Java application server and JRuby. Functionality such as clustering,
+  load-balancing and high-availability is included right out-of-the-box.
+  
+  This package of TorqueBox is intended for use with the Razor server, but has
+  no modifications from the stock TorqueBox, and is used under their license.
+# files and gem_files are space separated lists (or arrays)
+files:
+  - torquebox-dist-3.0.1-bin.zip
+  - razor-torquebox.sh
