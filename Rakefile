@@ -1,4 +1,5 @@
 require 'rake'
+require 'yaml'
 
 task :default do
   system("rake -T")
