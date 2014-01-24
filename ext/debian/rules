@@ -25,5 +25,8 @@ override_dh_auto_install:
 	mv $(BUILD_ROOT)/opt/razor-torquebox/jboss/standalone $(BUILD_ROOT)/var/lib/razor-torquebox
 	ln -s /var/lib/razor-torquebox $(BUILD_ROOT)/opt/razor-torquebox/jboss/standalone
 
+# Arch specific binaries shipped with this are already all taken care of, and
+# we don't need either shared lib deps generated, or them stripped, for
+# sending this content to the world.
 override_dh_shlibdeps:
-
+override_dh_strip:
