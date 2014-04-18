@@ -11,6 +11,9 @@ override_dh_auto_install:
 	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-1-bin.zip
 	mv $(BUILD_ROOT)/opt/torquebox-$(VERSION) $(BUILD_ROOT)/opt/razor-torquebox
 
+	# Override the default configuration with one of our own.
+	cp standalone.xml $(BUILD_ROOT)/opt/razor-torquebox/jboss/standalone/configuration/standalone.xml
+
 	mkdir -p $(BUILD_ROOT)/etc/razor
 	cp razor-torquebox.sh $(BUILD_ROOT)/etc/razor
 
