@@ -1,21 +1,15 @@
 #!/usr/bin/make -f
 
 BUILD_ROOT = $(CURDIR)/debian/tmp
+VERSION = 3.1.1
 
 %:
 	dh $@
 
 override_dh_auto_install:
 	mkdir -p $(BUILD_ROOT)/opt
-	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-3.0.1-bin.zip
-	mv $(BUILD_ROOT)/opt/torquebox-3.0.1 $(BUILD_ROOT)/opt/razor-torquebox
-
-	# This is nasty, but otherwise we get a dependency on the interpreter that we
-	# really, really don't want to have.
-	for bin in jruby_visualizer jrubyfx-jarify jrubyfx-generator jrubyfx-compile; do \
-	    sed -i -e 's@^#!/.*/jruby@#!/usr/bin/env jruby@' \
-	        $(BUILD_ROOT)/opt/razor-torquebox/jruby/bin/$${bin}; \
-	done
+	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-bin.zip
+	mv $(BUILD_ROOT)/opt/torquebox-$(VERSION) $(BUILD_ROOT)/opt/razor-torquebox
 
 	mkdir -p $(BUILD_ROOT)/etc/razor
 	cp razor-torquebox.sh $(BUILD_ROOT)/etc/razor
