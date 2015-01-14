@@ -43,8 +43,8 @@ rm -rf %{buildroot}
 
 # Install the binary distribution.
 mkdir -p %{buildroot}/opt
-unzip -q -d %{buildroot}/opt torquebox-dist-%{version}-bin.zip
-mv %{buildroot}/opt/torquebox-%{version} %{buildroot}/opt/razor-torquebox
+unzip -q -d %{buildroot}/opt torquebox-dist-3.1.1-bin.zip
+mv %{buildroot}/opt/torquebox-3.1.1 %{buildroot}/opt/razor-torquebox
 
 # Install a nicer, more generic way for consumers of this to interact with it,
 # so they don't have to hard-code our paths -- and we can fix them later by
