@@ -8,7 +8,7 @@ VERSION = 3.1.1
 
 override_dh_auto_install:
 	mkdir -p $(BUILD_ROOT)/opt
-	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-bin.zip
+	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-1-bin.zip
 	mv $(BUILD_ROOT)/opt/torquebox-$(VERSION) $(BUILD_ROOT)/opt/razor-torquebox
 
 	mkdir -p $(BUILD_ROOT)/etc/razor

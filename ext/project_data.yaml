@@ -18,5 +18,5 @@ description: |
   no modifications from the stock TorqueBox, and is used under their license.
 # files and gem_files are space separated lists (or arrays)
 files:
-  - torquebox-dist-3.1.1-bin.zip
+  - torquebox-dist-3.1.1-1-bin.zip
   - razor-torquebox.sh
