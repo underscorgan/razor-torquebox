@@ -1,14 +1,14 @@
 #!/usr/bin/make -f
 
 BUILD_ROOT = $(CURDIR)/debian/tmp
-VERSION = 3.1.1
+VERSION = 3.1.2
 
 %:
 	dh $@
 
 override_dh_auto_install:
 	mkdir -p $(BUILD_ROOT)/opt
-	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-1-bin.zip
+	unzip -qd $(BUILD_ROOT)/opt torquebox-dist-$(VERSION)-bin.zip
 	mv $(BUILD_ROOT)/opt/torquebox-$(VERSION) $(BUILD_ROOT)/opt/razor-torquebox
 
 	# Override the default configuration with one of our own.
